@@ -1,0 +1,47 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+
+#counter {
+  margin-top: 30px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+}
+
+#counter div {
+  text-align: center;
+}
+
+#display {
+  font-size: 40px;
+  font-style: bold;
+}
+
+#inputVal {
+  width: 60px;
+  height: 30px;
+  align-items: stretch;
+  border-radius: 5px;
+  border-color: grey;
+  font-size: 20px;
+  text-align: center;
+}
+button {
+  width: 40px;
+  height: 40px;
+  background-color: grey;
+  opacity: 0.7;
+  border-radius: 5px;
+  border-style: none;
+  color: white;
+  font-size: 25px;
+}
+
+button:hover {
+  color: grey;
+  background-color: white;
+}
