@@ -1,96 +1,106 @@
-const state = {
-  board: [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ],
-  //   players: ["x", "o"],
-  playersTurn: "x",
-  winner: null,
+const reference = {
+  player1: "X",
+  player2: "O",
+  tie: "C",
 };
 
-const winConditions = [
-  ["00", "01", "02"],
-  ["00", "10", "20"],
-  ["01", "11", "21"],
-  ["02", "12", "22"],
-  ["10", "11", "12"],
-  ["20", "21", "22"],
-  ["00", "11", "22"],
-  ["20", "11", "02"],
+const winningCombination = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
 ];
 
-// grab the table element
-const tabelEl = document.querySelector("table");
-const messageEl = document.querySelector("p");
+let board,
+  turn = 0,
+  winner;
 
-// table.listen(click, register move)
-tabelEl.addEventListener("click", function (e) {
-  //check where we clicked on the board
-  e.target.textContent = state.playersTurn;
-  let location = e.target.getAttribute("data-location");
-  let arrayLocation1 = location[0];
-  let arrayLocation2 = location[1];
-  state.board[arrayLocation1][arrayLocation2] = state.playersTurn;
-  console.log(checkForWin(state.playersTurn));
-  state.playersTurn === "x"
-    ? (state.playersTurn = "o")
-    : (state.playersTurn = "x");
+const squares = document.querySelectorAll(".square");
+const reset = document.querySelector("button");
+const headerMsg = document.querySelector("#header");
+const message = document.querySelector("#winner");
+
+squares.forEach(function (square) {
+  square.addEventListener("click", handleMove);
 });
 
-function checkForWin(player) {
-  let playedArray = [];
-  state.board.forEach(function (row, rowIdx) {
-    row.forEach(function (box, boxIdx) {
-      if (box === player) playedArray.push(`${rowIdx}${boxIdx}`);
-    });
-  });
+reset.addEventListener("click", initialize);
 
-  for (let condition of winConditions) {
-    let winCounter = 0;
-    condition.forEach(function (location) {
-      if (playedArray.includes(location)) winCounter++;
-    });
-    if (winCounter === 3) {
-      messageEl.textContent = `${player} wins `;
-      let btn = document.createElement("button");
-      btn.textContent = "restart";
-      btn.addEventListener("click", init);
-      messageEl.appendChild(btn);
-      break;
+function handleMove(e) {
+  value = parseInt(this.dataset.value);
+  if (board[value]) return;
+  if (winner) return;
+
+  if (turn % 2 == 0) {
+    board[value] = reference.player1;
+    e.target.querySelector("div").innerHTML = reference.player1;
+  } else {
+    board[value] = reference.player2;
+    e.target.querySelector("div").innerHTML = reference.player2;
+  }
+  turn += 1;
+
+  winner = getWinner();
+}
+
+function getWinner() {
+  for (let i = 0; i < winningCombination.length; i++) {
+    if (
+      board[winningCombination[i][0]] == reference.player1 &&
+      board[winningCombination[i][1]] == reference.player1 &&
+      board[winningCombination[i][2]] == reference.player1
+    ) {
+      messageStyling("Congratulations! Player 1 has won the game!");
+      return reference.player1;
+    } else if (
+      board[winningCombination[i][0]] == reference.player2 &&
+      board[winningCombination[i][1]] == reference.player2 &&
+      board[winningCombination[i][2]] == reference.player2
+    ) {
+      messageStyling("Congratulations! Player 2 has won the game!");
+      return reference.player2;
+      // if(board[winningCombination[i][0]])
+    } else if (checkIfBoardIsFull()) {
+      messageStyling("Oh no, it's a tie!");
+      return reference.tie;
     }
   }
 }
 
-// in memory rep of the board (2d array)
-
-//on load set the 2d array to have null spaces
-function init() {
-  state.board.forEach(function (row, rowIdx) {
-    row.forEach(function (box, boxIdx) {
-      state.board[rowIdx][boxIdx] = null;
-    });
-  });
-
-  render();
+function messageStyling(messageText) {
+  headerMsg.setAttribute("class", "hidden");
+  message.innerHTML = messageText;
+  message.style.fontFamily = "Georgia";
+  message.style.margin = "30px";
+  message.style.fontSize = "30px";
+  message.style.color = "darkgreen";
 }
 
-function render() {
-  //   tabelEl.children[0].children.forEach(function (tr, rowIdx) {
-  //     tr.children.forEach(function (td, tdIdx) {
-  //       td.textContent = state.board[rowIdx][tdIdx];
-  //     });
-  //   });
+function checkIfBoardIsFull() {
+  // loop through the board, if you hit a null out of the 9 that means the board isnt full
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === null) {
+      return false;
+    }
+  }
 
-  messageEl.innerHTML = "";
-
-  state.board.forEach(function (row, rowIdx) {
-    row.forEach(function (box, boxIdx) {
-      tabelEl.children[0].children[rowIdx].children[boxIdx].textContent = box;
-    });
-  });
+  return true;
 }
 
-//when we click the board we should change whos turn it is
+initialize();
 
-//on each click we should see if there is a winner
+function initialize() {
+  board = [null, null, null, null, null, null, null, null, null];
+  turn = 0;
+  winner = null;
+  squares.forEach(function (square) {
+    square.querySelector("div").innerHTML = "";
+  });
+  headerMsg.removeAttribute("class", "hidden");
+  message.innerHTML = "";
+  message.style.margin = "0px";
+}

@@ -1,19 +1,74 @@
-table {
-  max-width: 400px;
-  width: 100vw;
-  max-height: 400px;
-  height: 100vw;
-  margin: 0 auto;
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: palegoldenrod;
+}
+
+h1 {
+  font-size: 40px;
+  color: darkslategrey;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 15px;
+  color: black;
 }
 
 td {
-  border: solid 1px black;
-  width: 33%;
-  height: 33%;
-  text-align: center;
+  height: 200px;
+  width: 200px;
+  background-color: grey;
 }
 
-h1,
-p {
-  text-align: center;
+td div {
+  margin: 0 auto;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  pointer-events: none;
+  font-size: 60px;
+  padding-bottom: 90px;
+  color: yellow;
+}
+
+tr td {
+  border: solid 2px skyblue;
+  background-color: skyblue;
+}
+
+tr td:hover {
+  background-color: blueviolet;
+}
+
+button {
+  margin-top: 50px;
+  padding: 15px;
+  background-color: grey;
+  color: whitesmoke;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  border-color: black;
+  font-family: "Times New Roman", Times, serif;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
+
+.hidden {
+  display: none;
 }

@@ -1,3 +1,6 @@
+// 3.0
+
+// Menu data structure
 var menuLinks = [
   { text: "about", href: "/about" },
   { text: "catalog", href: "/catalog" },
@@ -5,29 +8,42 @@ var menuLinks = [
   { text: "account", href: "/account" },
 ];
 
-/* Task 1.0
-Select and cache the <main> element in a variable named mainEl.
-*/
-const mainEl = document.querySelector("main");
-const topMenuEl = document.getElementById("top-menu");
+// 1.0
 
-/*Task 1.1
-Set the background color of mainEl to the value stored in the --main-bg CSS custom property.
-*/
+let mainEl = document.querySelector("main");
+
+// 1.1
 
 mainEl.style.backgroundColor = "var(--main-bg)";
+
+// 1.2
+
 mainEl.innerHTML = "<h1>SEI Rocks!</h1>";
-mainEl.setAttribute("class", "flex-ctr");
+
+// 1.3
+
 mainEl.classList.add("flex-ctr");
 
-// Task 2.0
+// 2.0
+
+let topMenuEl = document.querySelector("#top-menu");
+
+// 2.1
+
 topMenuEl.style.height = "100%";
+
+// 2.2
+
 topMenuEl.style.backgroundColor = "var(--top-menu-bg)";
+
+// 2.3
+
 topMenuEl.classList.add("flex-around");
 
-// Task 3.0
-menuLinks.forEach((link) => {
-  const newEl = document.createElement("el");
+// 3.1
+
+menuLinks.forEach(function (link) {
+  let newEl = document.createElement("a");
   newEl.setAttribute("href", link.href);
   newEl.innerHTML = link.text;
   topMenuEl.appendChild(newEl);
