@@ -73,7 +73,7 @@ function updateWrongLetterEl() {
   });
 
   //display lives
-  lives.innerText = `Lives left: ${wrongLetters.length}`;
+  //lives.innerText = `Lives left: ${wrongLetters.length}`;
   //Check if lost
   if (wrongLetters.length === figureParts.length) {
     finalMessage.innerText = "Sorry, you didn't get that right.. 😕";
